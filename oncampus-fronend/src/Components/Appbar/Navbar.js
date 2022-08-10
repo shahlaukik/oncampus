@@ -55,7 +55,17 @@ const Navbar = ({ visibleSearch, presentPage }) => {
                         src="https://res.cloudinary.com/dtbvczxpk/image/upload/v1659282513/oncampus/LOGO_wzkymo.png"
                         alt=""
                     />
-                    <p id="abc">oncampus</p>
+                    <p
+                        id="logo"
+                        style={{
+                            margin: "auto 0.2rem",
+                            fontFamily: "Hind Siliguri, monospace",
+                            fontWeight: "900",
+                            fontSize: "2rem",
+                        }}
+                    >
+                        oncampus
+                    </p>
                 </div>
                 <div className="ul">
                     {visibleSearch ? (

@@ -7,7 +7,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { makeStyles } from "@mui/styles";
 import { useHistory, useLocation, useNavigate } from "react-router-dom";
-import { AddCircleOutlineOutlined } from "@mui/icons-material";
+import { AddCircleOutlineOutlined, ImportantDevices } from "@mui/icons-material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => {
         },
         root: {
             display: "flex",
-
             fontFamily: "Inter, sans-serif",
         },
         drawer: {
@@ -49,15 +48,14 @@ const useStyles = makeStyles((theme) => {
         },
         drawerPaper: {
             background: "#181818",
-
+            border: "none",
             width: drawerWidth,
             [theme.breakpoints.down(650)]: {
                 width: "60px",
             },
         },
         active: {
-            background: "#F0BC5E",
-            color: "black"
+            background: "#fff",
         },
         title: {
             padding: theme.spacing(0.75),
@@ -141,7 +139,7 @@ export default function SideBar() {
                 variant="permanent"
                 classes={{ paper: classes.drawerPaper }}
                 anchor="left"
-                style={{margin:"0px"}}
+                style={{ margin: "0px" }}
             >
                 <div>
                     <ListItem button onClick={() => navigate("/dashboard")}>
@@ -151,10 +149,7 @@ export default function SideBar() {
                         <ListItemText
                             className={classes.title}
                             primary={
-                                <Typography
-                                    variant="h5"
-                                    className={classes.title}
-                                >
+                                <Typography variant="h5" className={classes.title}>
                                     oncampus
                                 </Typography>
                             }
@@ -169,21 +164,19 @@ export default function SideBar() {
                             button
                             key={item.text}
                             onClick={() => navigate(item.path)}
-                            className={
-                                location.pathname == item.path
-                                    ? classes.active
-                                    : null
-                            }
+                            className={location.pathname === item.path ? classes.active : null}
                         >
                             <ListItemIcon
                                 color="secondary"
                                 className={classes.icon}
+                                style={location.pathname === item.path ? { color: "#181818" } : null}
                             >
                                 {item.icon}
                             </ListItemIcon>
                             <ListItemText
                                 className={classes.label}
                                 primary={item.text}
+                                style={location.pathname === item.path ? { color: "#181818" } : null}
                             />
                         </ListItem>
                     ))}
@@ -195,21 +188,9 @@ export default function SideBar() {
             <div className={classes.page}>
                 <div className={classes.toolbar}></div>
                 <Routes>
-                    <Route
-                        exact
-                        path="/myOwnBuySellItems"
-                        element={<My_buySellItems />}
-                    />
-                    <Route
-                        exact
-                        path="/myOwnLostFoundItems"
-                        element={<My_lostFoundItems />}
-                    />
-                    <Route
-                        exact
-                        path="/myOwnRequirements"
-                        element={<My_requirements />}
-                    />
+                    <Route exact path="/myOwnBuySellItems" element={<My_buySellItems />} />
+                    <Route exact path="/myOwnLostFoundItems" element={<My_lostFoundItems />} />
+                    <Route exact path="/myOwnRequirements" element={<My_requirements />} />
                     <Route exact path="/" element={<ProfilePage />} />
                 </Routes>
             </div>

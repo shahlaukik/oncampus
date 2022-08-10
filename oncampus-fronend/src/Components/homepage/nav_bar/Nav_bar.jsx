@@ -10,11 +10,22 @@ const Nav_bar = () => {
         <div className="navbar3">
             <div className="navbar-links3">
                 <div className="navbar-links_logo3">
-                    <img id = "logo_img"
+                    <img
+                        id="logo_img"
                         src="https://res.cloudinary.com/dtbvczxpk/image/upload/v1659282513/oncampus/LOGO_wzkymo.png"
                         alt=""
                     />
-                    <p id="logo" style={{margin :"0.2rem"}}>oncampus</p>
+                    <p
+                        id="logo"
+                        style={{
+                            margin: "auto 0.2rem",
+                            fontFamily: "Hind Siliguri, monospace",
+                            fontWeight: "900",
+                            fontSize: "2rem",
+                        }}
+                    >
+                        oncampus
+                    </p>
                 </div>
                 <div className="navbar-links_container3">
                     <p>
