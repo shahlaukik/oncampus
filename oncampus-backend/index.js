@@ -43,6 +43,7 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.use(cors());
 
 // Encoding url
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Intiating morgan if not in production
