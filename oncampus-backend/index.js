@@ -50,7 +50,10 @@ if (process.env.NODE_ENV !== "production") {
 
 // Socket setup
 const http = require("http");
+// Wrapping Express app with Socket.io
+const server = http.createServer(app);
 const socketio = require("socket.io");
+const io = socketio(server);
 const {
     userJoin,
     getCurrentUser,
@@ -58,9 +61,6 @@ const {
     getRoomUsers,
 } = require("./utils/Socket");
 
-// Wrapping Express app with Socket.io
-const server = http.createServer(app);
-const io = socketio(server);
 
 // Socket listeners
 io.on("connection", (socket) => {

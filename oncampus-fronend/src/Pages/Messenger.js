@@ -75,7 +75,7 @@ function Messenger() {
   }, [messages]);
 
   useEffect(() => {
-    socket.current = io("https://kolegia-socket.herokuapp.com");
+      socket.current = io("https://kolegia-socket.herokuapp.com");
 
     //RECEIVE MESSAGE FROM OTHER USER USING SOCKET
     socket.current.on("getMessage", (data) => {
