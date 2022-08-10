@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const favicon = require("serve-favicon");
 const path = require("path");
+var cors = require('cors')
 require("dotenv").config();
 
 // Importing utility
@@ -38,6 +39,8 @@ const app = express();
 // Configuring Express to use static files
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+
+app.use(cors());
 
 // Encoding url
 app.use(express.urlencoded({ extended: true }));
