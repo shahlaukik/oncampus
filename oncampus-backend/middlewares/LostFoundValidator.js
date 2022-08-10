@@ -60,6 +60,7 @@ const LostItemSchema = Joi.object({
 
     user_details: Joi.any(),
     product_id: Joi.string().optional(),
+    token: Joi.any(),
 }).options({ allowUnknown: false });
 
 const ValidateLostFound = (req, res, next) => {

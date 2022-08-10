@@ -103,7 +103,7 @@ router.get("/get-raised-responses", UserAuth, async (req, res) => {
             // Join with the product model
             {
                 $lookup: {
-                    from: "lostfounditems",
+                    from: "LostFoundItems",
                     localField: "product_id",
                     foreignField: "_id",
                     as: "product_details",
