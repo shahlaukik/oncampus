@@ -71,7 +71,7 @@ const Cards = () => {
             );
           })
         ) : (
-          <div></div>
+          <div> No Items </div>
         )}
       </Grid>
       <div className="circle">

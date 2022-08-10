@@ -10,8 +10,12 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 const LoginSignUp = () => {
     const [loading, setLoading] = useState(false);
 
-    const responseStatusCode = useSelector((state) => state.auth.loginStatusCode);
-    const loginWithEmailResponse = useSelector((state) => state.auth.loginWithEmailResponse);
+    const responseStatusCode = useSelector(
+        (state) => state.auth.loginStatusCode
+    );
+    const loginWithEmailResponse = useSelector(
+        (state) => state.auth.loginWithEmailResponse
+    );
     const errorMessage = useSelector((state) => state.auth.errorMessage);
 
     const navigate = useNavigate();
@@ -43,6 +47,10 @@ const LoginSignUp = () => {
 
     useEffect(() => {
         setLoading(false);
+        if (Message === "Invalid Credentials")
+            setTimeout(() => {
+                setLoading(false);
+            }, 3000);
     }, [Message]);
 
     const handleSubmitSignIn = () => {
@@ -59,7 +67,10 @@ const LoginSignUp = () => {
         <>
             <div className="body">
                 <div className="container " id="container">
-                    <button onClick={handleClick} className="mobile_view_signUp">
+                    <button
+                        onClick={handleClick}
+                        className="mobile_view_signUp"
+                    >
                         Sign up
                     </button>
                     <div>
@@ -81,7 +92,9 @@ const LoginSignUp = () => {
                                     type="password"
                                     name="password"
                                     placeholder="&#xf023;  Password"
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
                                 />
                             </div>
 
@@ -108,7 +121,14 @@ const LoginSignUp = () => {
                             </LoadingButton>
 
                             <p style={{ color: "black" }}>{Message}</p>
-                            <Link style={{ fontSize: "18px", marginTop: "2rem", fontWeight: "700" }} to="/verifyEmail">
+                            <Link
+                                style={{
+                                    fontSize: "18px",
+                                    marginTop: "2rem",
+                                    fontWeight: "700",
+                                }}
+                                to="/verifyEmail"
+                            >
                                 Forgot Password?
                             </Link>
                         </div>

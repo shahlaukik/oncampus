@@ -379,24 +379,22 @@ function LostFoundItemDetails() {
                         <Button
                             type="submit"
                             variant="contained"
-                            disabled={isLoading}
+                            // disabled={isLoading}
                             onClick={handleConfirmDelete}
                             style={{ width: "fit-content" }}
                             value="true"
                         >
-                            {isLoading && <CircularProgress size={14} />}
-                            {!isLoading && "GO AHEAD"}
+                            "GO AHEAD"
                         </Button>
                         <Button
                             type="submit"
                             variant="contained"
-                            disabled={isLoading}
+                            // disabled={isLoading}
                             style={{ marginLeft: "2%", width: "fit-content" }}
                             value="false"
                             onClick={handleConfirmDelete}
                         >
-                            {isLoading && <CircularProgress size={14} />}
-                            {!isLoading && "CANCEL"}
+                            "CANCEL"
                         </Button>
                     </div>
                 </Modal>
@@ -420,24 +418,22 @@ function LostFoundItemDetails() {
                         <Button
                             type="submit"
                             variant="contained"
-                            disabled={isLoading}
+                            // disabled={isLoading}
                             onClick={handleMarkAsFound}
                             style={{ width: "fit-content" }}
                             value="true"
                         >
-                            {isLoading && <CircularProgress size={14} />}
-                            {!isLoading && "CONFIRM"}
+                            "CONFIRM"
                         </Button>
                         <Button
                             type="submit"
                             variant="contained"
-                            disabled={isLoading}
+                            // disabled={isLoading}
                             style={{ marginLeft: "2%", width: "fit-content" }}
                             value="false"
                             onClick={handleMarkAsFound}
                         >
-                            {isLoading && <CircularProgress size={14} />}
-                            {!isLoading && "CANCEL"}
+                            "CANCEL"
                         </Button>
                     </div>
                 </Modal>

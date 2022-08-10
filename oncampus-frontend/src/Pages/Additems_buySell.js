@@ -96,7 +96,7 @@ const handleSubmit=(e)=>{
         <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
-          <h2 style={{color:'#332A7C',marginBottom:'18px',fontFamily:"Inter, sans-serif"}}>Add Product</h2>
+          <h2 style={{color:'#181818',marginBottom:'18px',fontFamily:"Inter, sans-serif"}}>Add Product</h2>
             <form className="form02" onSubmit={handleSubmit}>
            
             

@@ -6,11 +6,16 @@ import { useNavigate } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { resetErrorMessage } from "../redux/actions/authActions";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { ToastContainer, toast } from "react-toastify";
 
 const SignUp = () => {
     const [loading, setLoading] = useState(false);
-    const responseStatusCode = useSelector((state) => state.auth.loginStatusCode);
-    const loginWithEmailResponse = useSelector((state) => state.auth.loginWithEmailResponse);
+    const responseStatusCode = useSelector(
+        (state) => state.auth.loginStatusCode
+    );
+    const loginWithEmailResponse = useSelector(
+        (state) => state.auth.loginWithEmailResponse
+    );
     const errorMessage = useSelector((state) => state.auth.errorMessage);
 
     const navigate = useNavigate();
@@ -48,15 +53,25 @@ const SignUp = () => {
     }, [Message]);
 
     const handleSubmitSignUp = () => {
-        setLoading(true);
-        dispatch(verifyEmail(email));
+        const pattern = /[a-zA-Z0-9_]+@iiitm.ac.in/g;
+        if (email.match(pattern)) {
+            setLoading(true);
+            dispatch(verifyEmail(email));
+        } else {
+            toast.error("Use Institute assigned email address", {
+                theme:"dark",
+            });
+        }
     };
 
     return (
         <>
             <div className="body">
                 <div className="container " id="container">
-                    <button onClick={handleClick} className="mobile_view_signUp">
+                    <button
+                        onClick={handleClick}
+                        className="mobile_view_signUp"
+                    >
                         Sign In
                     </button>
                     <div>
@@ -67,10 +82,12 @@ const SignUp = () => {
                                 <input
                                     style={{ marginTop: "50px" }}
                                     className="signup-email input"
-                                    type="email"
+                                    // type="email"
+                                    pattern="[a-z0-9_]+@iiitm.ac.in"
                                     name="email"
                                     placeholder=" &#xf0e0;  Email"
                                     onChange={(e) => setEmail(e.target.value)}
+                                    required
                                 />
                             </div>
 

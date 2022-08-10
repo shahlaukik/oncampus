@@ -4,36 +4,33 @@ import { useDispatch, useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 import "../Components/Lost_Found/LostFound.css";
 import {
-  editLostFoundItem,
-  getLostFoundProductDetails,
+  addNewLostFoundItem,
   resetStatus,
 } from "../redux/actions/LostFoundActions";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../Components/Appbar/Navbar";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
-function Edit_MyLostFoundItems() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const params = useParams();
+
+function AddItem() {
 
   //CATEGORIES DATA
   const categories = [
     {
-      value: "Electronics and Mobiles",
-      label: "Electronics and Mobiles",
+      value: "Electronics & Mobiles",
+      label: "Electronics & Mobiles",
     },
     {
       value: "Fashion",
       label: "Fashion",
     },
     {
-      value: "Home and Garden",
-      label: "Home and Garden",
+      value: "Home & Garden",
+      label: "Home & Garden",
     },
     {
       value: "Sports & Outdoors",
@@ -56,37 +53,30 @@ function Edit_MyLostFoundItems() {
       label: "Books & Audible",
     },
   ];
-  // const location=useLocation();
 
-  const token = localStorage.getItem("jwt");
-  const decoded = jwt_decode(token);
-  const product_id = params.id;
-  const product = useSelector((state) => state.lostFound.singleProduct.Product);
-
-  const [name, setName] = useState(product.name ? product.name : "");
-  const [description, setDescription] = useState(
-    product.description ? product.description : ""
-  );
-  const [brand, setBrand] = useState(product.brand ? product.brand : "");
-  const [color, setColor] = useState(product.color ? product.color : "");
-
-  const [category, setCategory] = useState(
-    ""
-    // product.category ? product.category : ""
-  );
+  //STATE
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [brand, setBrand] = useState("");
+  const [color, setColor] = useState("");
   const [OtherCategory, setCategoryOthers] = useState("");
-  const [lostDate, setLostDate] = useState(
-    product.lost_date ? product.lost_date : ""
-  );
-  const [lostTime, setLostTime] = useState(
-    product.lost_time ? product.lost_time : ""
-  );
-  const [lostLocation, setLostLocation] = useState(
-    product.lost_location ? product.lost_location : ""
-  );
+  const [lostDate, setLostDate] = useState(null);
+  const [lostTime, setLostTime] = useState(null);
+  const [lostLocation, setLostLocation] = useState("");
   const [files, setFiles] = useState([]);
-  const [editItemResponse, setEditItemResponse] = useState(null);
-  const [editSuccess, setEditSuccess] = useState(false);
+  const [createResponse, setCreateResponse] = useState(null);
+  const [done, setDone] = useState(false);
+  const [category, setCategory] = useState("");
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const addItemsResponse = useSelector(
+    (state) => state.lostFound.addItemsLostFoundResponse
+  );
+
+
+//FUNCTION TO CONVERT DATE IN ISO FORMAT
 
   function get_iso_time({ date, time }) {
     try {
@@ -107,19 +97,10 @@ function Edit_MyLostFoundItems() {
   }
 
   const newLostTime=get_iso_time({time:lostTime});
+  const newLostDate=get_iso_time({date:lostDate});
 
-  useEffect(() => {
-    dispatch(getLostFoundProductDetails({ product_id, decoded }));
-  }, []);
 
-  
-  const handleChange = (event) => {
-    setCategory(event.target.value);
-  };
-  const editLostFoundItemResponse = useSelector(
-    (state) => state.lostFound.editlostfoundResponse
-  );
-
+//FUNCTION TO DISPATCH ACTION
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -127,7 +108,6 @@ function Edit_MyLostFoundItems() {
     const decoded = jwt_decode(token);
 
     const formData = new FormData();
-    formData.append("product_id", product_id);
     formData.append("name", name);
     formData.append("brand", brand);
     if (category) {
@@ -138,38 +118,46 @@ function Edit_MyLostFoundItems() {
 
     formData.append("color", color);
     formData.append("description", description);
-    formData.append("lost_date", lostDate);
+    formData.append("lost_date", newLostDate);
     formData.append("lost_time", newLostTime);
     formData.append("lost_location", lostLocation);
     formData.append("token", decoded.auth_token);
+
     for (var i = 0; i < files.length; i++) {
       formData.append("files", files[i]);
     }
-   
-    dispatch(editLostFoundItem(formData));
+    dispatch(addNewLostFoundItem(formData));
+  };
+  
+
+  const handleChange = (event) => {
+    setCategory(event.target.value);
   };
 
+  //TOASTIFY FUNCTION START
   useEffect(() => {
-    setEditItemResponse(editLostFoundItemResponse);
-  }, [editLostFoundItemResponse]);
+    setCreateResponse(addItemsResponse);
+  }, [addItemsResponse]);
 
   useEffect(() => {
-    if (editItemResponse?.status === 200) {
-      toast.success(editItemResponse?.message);
-      setEditSuccess(true);
-      setEditItemResponse(null);
+    if (createResponse?.status === 200) {
+      toast.success(createResponse?.message);
+      setDone(true);
+      setCreateResponse(null);
     } else {
-      toast.error(editItemResponse?.message);
-      setEditItemResponse(null);
+      toast.error(createResponse?.message);
+      setCreateResponse(null);
     }
-  }, [editItemResponse]);
+  }, [createResponse]);
+
+  //TOASTIFY FUNCTIONS END
 
   useEffect(() => {
-    if (editSuccess === true) {
+    if (done === true) {
       dispatch(resetStatus);
-      navigate(`/lostItem/${product_id}`);
+      navigate("/lostFound");
     }
-  }, [editSuccess]);
+  }, [done]);
 
   return (
     <>
@@ -185,8 +173,7 @@ function Edit_MyLostFoundItems() {
                 className="formInput"
                 type="text"
                 id="item"
-                defaultValue={name}
-                placeholder="enter item name you lost"
+                placeholder="Enter the name of lost item"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
                 required
@@ -199,10 +186,10 @@ function Edit_MyLostFoundItems() {
               <input
                 className="formInput"
                 type="text"
-                defaultValue={brand}
                 id="brand"
-                placeholder="enter brand of the item you lost"
+                placeholder="Enter the brand of the item lost"
                 onChange={(e) => setBrand(e.target.value)}
+                value={brand}
                 required
               ></input>
             </div>
@@ -228,8 +215,9 @@ function Edit_MyLostFoundItems() {
                 className="formInput"
                 type="text"
                 id="category"
-                placeholder="if any other"
+                placeholder="If Any other"
                 onChange={(e) => setCategoryOthers(e.target.value)}
+                value={OtherCategory}
               ></input>
             </div>
             <div className="inputContainer">
@@ -239,10 +227,10 @@ function Edit_MyLostFoundItems() {
               <input
                 className="formInput"
                 type="name"
-                defaultValue={color}
                 id="color"
-                placeholder="primary color of item"
+                placeholder="Primary color of the item"
                 onChange={(e) => setColor(e.target.value)}
+                value={color}
                 required
               ></input>
             </div>
@@ -268,10 +256,11 @@ function Edit_MyLostFoundItems() {
               <input
                 className="formInput"
                 type="date"
-                defaultValue={lostDate}
                 id="date"
-                placeholder="date when item lost"
+                placeholder="Date when item lost"
                 onChange={(e) => setLostDate(e.target.value)}
+                value={lostDate}
+                required
               ></input>
             </div>
             <div className="inputContainer">
@@ -279,12 +268,13 @@ function Edit_MyLostFoundItems() {
                 Time
               </label>
               <input
+              
                 className="formInput"
                 type="time"
-                defaultValue={lostTime}
                 id="time"
-                placeholder="time when item lost"
+                placeholder="Time when item lost"
                 onChange={(e) => setLostTime(e.target.value)}
+                value={lostTime}
                 required
               ></input>
             </div>
@@ -295,10 +285,10 @@ function Edit_MyLostFoundItems() {
               <input
                 className="formInput"
                 type="text"
-                defaultValue={lostLocation}
                 id="location"
-                placeholder="location where item lost"
+                placeholder="Where did you lose the item?"
                 onChange={(e) => setLostLocation(e.target.value)}
+                value={lostLocation}
                 required
               ></input>
             </div>
@@ -310,9 +300,9 @@ function Edit_MyLostFoundItems() {
                 className="formInput"
                 type="textarea"
                 id="description"
-                defaultValue={description}
-                placeholder="tell us more about item, additional information"
+                placeholder="Tell us more about the item!"
                 onChange={(e) => setDescription(e.target.value)}
+                value={description}
                 required
               ></textarea>
             </div>
@@ -320,17 +310,27 @@ function Edit_MyLostFoundItems() {
               <button
                 type="submit"
                 className="primary submitBtn"
-                style={{ marginBottom: "1.5rem" }}
+                style={{color:'white',background:'#181818',borderRadius:'15px',height:'3.2rem',fontFamily:'Inter,sans-serif',fontWeight:'700',marginBottom:"1.5rem"}}
               >
-                SAVE
+                POST
               </button>
             </div>
             <div></div>
           </div>
         </form>
       </div>
+      {/* <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+      /> */}
     </>
   );
 }
 
-export default Edit_MyLostFoundItems;
+export default AddItem;

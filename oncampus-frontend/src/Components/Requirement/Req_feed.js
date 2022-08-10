@@ -16,8 +16,8 @@ const Req_feed = ({ data,postedBy,handleClick ,editOption}) => {
       <div className='eidtIcons'>
       <Link 
    to='/editMyRequirement'
-  state={{ Data: data }}><FaEdit  className='svg'/></Link>  
-    < FaTrashAlt className='svg' onClick={(e)=>handleClick(data,e)}/>
+  state={{ Data: data }}><FaEdit style={{fill:"#181818"}}  className='svg'/></Link>  
+    <FaTrashAlt style={{fill:"#181818"}} className='svg' onClick={(e)=>handleClick(data,e)}/>
       </div> : null
 }
   

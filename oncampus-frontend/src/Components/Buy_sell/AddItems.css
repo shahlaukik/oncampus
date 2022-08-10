@@ -26,6 +26,7 @@ body.active-modal {
 
 }
 
+
 .overlay {
     /* background: rgba(49,49,49,0.8); */
     background-color: WHITE ;
@@ -41,6 +42,7 @@ body.active-modal {
     line-height: 1.8;
     background: white;
     padding: 12px 28px;
+    padding-bottom: 2rem;
     border-radius: 10px;
     margin-bottom:15px;
 
@@ -69,7 +71,7 @@ body.active-modal {
 .modal-content input{
     width: 20rem;
     height: 2.5rem;
-    border: 0.75px solid #F0BC5E ;
+    /* border: 0.75px solid #181818 ; */
     border-radius: 4px;
 }
 
@@ -92,7 +94,8 @@ body.active-modal {
 .form02 button{
     width: 20rem;
     height: 2.5rem;
-    background-color: #F25767;
+    background-color: #181818;
+    margin: 0;
     font-size: 1.5rem;
     color: white;
     border: none;
@@ -103,9 +106,10 @@ body.active-modal {
     font-family:'Hind Siliguri', sans-serif;
     font-weight: 400;
     font-size: 18px;
+    padding: 0.5rem 1rem;
 }
 .form02 label{
-    color: #332A7C;
+    color: #181818;
     font-size: 20px;
     font-weight: 300;
     font-family: 'Poppins', sans-serif;
