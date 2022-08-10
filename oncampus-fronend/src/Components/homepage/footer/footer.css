@@ -1,0 +1,9 @@
+.footer-copyright3 {
+    background: var(--color-primary);
+    text-align: center;
+    width: 100%;
+    font-size: 12px;
+    font-family: var(--font-family);
+    line-height: 16px;
+    color: #fff;
+}
