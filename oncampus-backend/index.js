@@ -105,7 +105,7 @@ app.use("/feedback", Feedbacks);
 app.use("/otp", OTP);
 app.use("/lost-found-items", LostFoundItems);
 app.use("/raisedhands", RaisedHands);
-app.use("/raisedhands", Requirements);
+app.use("/requirements", Requirements);
 app.use("/auth", User);
 
 app.use((req, res, next) => {
