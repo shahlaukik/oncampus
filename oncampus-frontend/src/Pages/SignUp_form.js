@@ -107,7 +107,7 @@ const SignUpForm = () => {
                     <input onChange={(e) => setPhone(e.target.value)} type="number" placeholder="Mobile No" />
                     <input onChange={(e) => setYear(e.target.value)} type="string" placeholder="Year(2019,2020..)" />
                     <input onChange={(e) => setBatch(e.target.value)} type="string" placeholder="Batch(IMG,IMT,BCS)" />
-                    <input onChange={(e) => setRollNo(e.target.value)} type="text" placeholder="Roll No(2020-IMGxxx)" />
+                    <input onChange={(e) => setRollNo(e.target.value)} type="text" placeholder="Roll No(2020BCS--xxx)" />
                     <input onChange={(e) => setHostel(e.target.value)} type="text" placeholder="Hostel(BH-1)" />
                     <input onChange={(e) => setRoomNo(e.target.value)} type="text" placeholder="Room No" />
 
